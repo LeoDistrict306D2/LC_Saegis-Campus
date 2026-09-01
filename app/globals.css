@@ -1,0 +1,210 @@
+@import 'tailwindcss';
+
+/*
+ * Leo Club of Saegis Campus — "Lab"
+ *
+ * A health-sciences campus club, and the only dark-first site in this set. The
+ * system borrows from instrumentation rather than from consumer dark mode:
+ * hairline rules, monospace labels and identifiers, precise data panels, and a
+ * single cyan used the way an indicator light is used — sparingly, and always
+ * to mean something.
+ *
+ * Deliberately NOT a glassmorphic dashboard. No blur panels, no floating cards,
+ * no gradient meshes. The restraint is what stops it looking like every other
+ * dark template.
+ *
+ * Token names are ROLES, not hues.
+ */
+
+@theme {
+  /* --- Surfaces ------------------------------------------------------- */
+  /* Dark IS the base here, so `page` is near-black and `inverse` is the light
+     band — the opposite of every other club in the set. */
+  --color-page: #08090c;
+  --color-panel: #10131a;
+  --color-raised: #171b24;
+  --color-inverse: #f2f5f8;
+  --color-on-inverse: #08090c;
+
+  /* --- Text ----------------------------------------------------------- */
+  --color-ink: #e6edf3;
+  --color-ink-muted: #9ba7b4;
+  --color-ink-faint: #6b7784;
+
+  /* --- Accent ---------------------------------------------------------- */
+  /* Cyan is an indicator, not a decoration. It marks state, identifiers and
+     links, and appears perhaps a dozen times per page. */
+  --color-accent: #22d3ee;
+  --color-accent-strong: #67e8f9;
+  --color-accent-dim: #0e7490;
+
+  /* --- Lines ----------------------------------------------------------- */
+  --color-rule: #1c222b;
+  --color-rule-strong: #2e3742;
+
+  /* --- Type ------------------------------------------------------------ */
+  --font-heading: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, monospace;
+
+  --text-lab: 3.75rem;
+  --text-lab--line-height: 1.04;
+  --text-lab--letter-spacing: -0.03em;
+
+  --ease-lab: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@layer base {
+  html {
+    scroll-padding-top: 6rem;
+    /* Tells the browser to render form controls and scrollbars dark. */
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--color-page);
+    color: var(--color-ink);
+    font-family: var(--font-heading);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--color-accent) 30%, transparent);
+    color: var(--color-ink);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .wrap {
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .wrap {
+      padding-inline: 2rem;
+    }
+  }
+
+  .measure {
+    max-width: 38rem;
+  }
+
+  .band {
+    padding-block: 4.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .band {
+      padding-block: 6.5rem;
+    }
+  }
+
+  /* Monospace label type — identifiers, timestamps, field names. */
+  .mono {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-ink-faint);
+  }
+
+  /*
+   * A data panel. Hairline border with a cyan top edge, like a labelled
+   * instrument reading. No blur, no shadow, no rounded corners.
+   */
+  .spec {
+    border: 1px solid var(--color-rule);
+    border-top: 1px solid var(--color-accent-dim);
+    background-color: var(--color-panel);
+    padding: 1.5rem;
+    transition: border-color 200ms var(--ease-lab);
+  }
+
+  .spec:hover {
+    border-color: var(--color-rule-strong);
+    border-top-color: var(--color-accent);
+  }
+
+  /*
+   * The one glow on the site: a faint cyan bleed behind a heading block.
+   * Kept low enough that it reads as ambient light rather than an effect.
+   */
+  .bleed {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .bleed::before {
+    content: '';
+    position: absolute;
+    inset: -20% -10% auto -10%;
+    height: 16rem;
+    z-index: -1;
+    background: radial-gradient(
+      50% 60% at 30% 40%,
+      color-mix(in srgb, var(--color-accent) 12%, transparent) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
+  }
+
+  /* The status marker used on log entries. */
+  .dot {
+    display: inline-block;
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 9999px;
+    background-color: var(--color-accent);
+  }
+
+  /* Hairline grid backdrop, used once on the opening screen. */
+  .grid-faint {
+    background-image:
+      linear-gradient(var(--color-rule) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-rule) 1px, transparent 1px);
+    background-size: 4rem 4rem;
+  }
+
+  .reveal {
+    transition:
+      opacity 400ms var(--ease-lab),
+      transform 400ms var(--ease-lab);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .reveal.is-hidden {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+}
