@@ -137,8 +137,24 @@ claims about clinical governance on the club's behalf.
 
 Set `siteUrl` in `content/club.ts`, then `npm run build && npm start`.
 
-## Outstanding content
+## Content status
 
-Everything marked `TODO(content)` needs real values. Images are generated
-solid-colour placeholders. The gallery copy states that no patient is
-identifiable in any published image — keep that true.
+This site currently ships with **illustrative dummy content** — a complete
+club record (charter date, board roster, achievements, past presidents,
+project log, and a ten-item photo gallery) written in the real data shape, so
+every page, route and component renders exactly as it will once the club's
+own data lands. Nothing is empty or stubbed.
+
+Every file still carries a `TODO(content)` comment marking it as dummy data
+so it is unmistakable from the source. To go live with the real club:
+
+- Replace the names, dates, and numbers in `content/*.ts` with the club's
+  actual records.
+- Replace `public/images/logo/logo.png`, `public/images/hero/hero.png`, and
+  the shared `public/images/projects/placeholder.png` (referenced by every
+  project and gallery entry) with real photography.
+- Drop the `TODO(content)` comment once a file holds real data.
+- Keep the gallery's existing commitment that no patient is identifiable in
+  any published image once real clinical-programme photos replace these.
+
+No code changes are needed to go from dummy to real — only the content.
