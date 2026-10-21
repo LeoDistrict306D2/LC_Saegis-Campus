@@ -24,6 +24,7 @@ export function Photo({
   sizes = '100vw',
   full = false,
   className,
+  kenBurns = false,
 }: {
   image: ImageRef;
   ratio?: keyof typeof ratios;
@@ -32,6 +33,8 @@ export function Photo({
   /** Skips the darkening. Use where the photograph is the subject. */
   full?: boolean;
   className?: string;
+  /** A slow, looping zoom. Reserved for the banner photo — never a listing photo. */
+  kenBurns?: boolean;
 }) {
   return (
     <figure className={cn('m-0', className)}>
@@ -48,7 +51,7 @@ export function Photo({
           sizes={sizes}
           priority={priority}
           loading={priority ? undefined : 'lazy'}
-          className={cn('object-cover', !full && 'brightness-90 contrast-105')}
+          className={cn('object-cover', !full && 'brightness-90 contrast-105', kenBurns && 'animate-ken-burns')}
         />
       </div>
       {image.caption ? (

@@ -207,4 +207,55 @@
     opacity: 0;
     transform: translateY(0.75rem);
   }
+
+  /*
+   * Entry splash: a boot readout, not a dashboard — no blur, no gradient
+   * mesh. Pure CSS — no client JS — so it degrades correctly with
+   * JavaScript off.
+   */
+  .splash-screen {
+    animation: splash-out 350ms var(--ease-lab) 1900ms forwards;
+  }
+
+  .splash-blink {
+    animation: splash-blink 1.1s step-end infinite;
+  }
+
+  @keyframes splash-out {
+    to {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+  }
+
+  @keyframes splash-blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.2;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .splash-screen {
+      animation-delay: 0ms;
+    }
+  }
+
+  /* Slow drift on the banner photo only — never a listing photo. */
+  .animate-ken-burns {
+    animation: ken-burns 18s var(--ease-lab) infinite alternate;
+  }
+
+  @keyframes ken-burns {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.07);
+    }
+  }
 }

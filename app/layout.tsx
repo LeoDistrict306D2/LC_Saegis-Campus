@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { club } from '@/content/club';
 import { SiteHeader } from '@/components/SiteHeader';
 import { SiteFooter } from '@/components/SiteFooter';
+import { SplashScreen } from '@/components/SplashScreen';
 import { fontVariables } from './fonts';
 import './globals.css';
 
@@ -55,6 +56,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={fontVariables}>
+        <SplashScreen />
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:bg-accent focus:px-4 focus:py-2 focus:font-mono focus:text-sm focus:text-page"

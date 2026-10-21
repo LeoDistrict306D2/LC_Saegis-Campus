@@ -68,7 +68,7 @@ export default function HomePage() {
       </div>
 
       <section className="wrap">
-        <Photo image={club.heroImage} ratio="wide" priority sizes="100vw" full />
+        <Photo image={club.heroImage} ratio="wide" priority sizes="100vw" full kenBurns />
       </section>
 
       {/* Constraints ---------------------------------------------------- */}
